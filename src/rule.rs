@@ -12,6 +12,19 @@ impl Rule {
     pub(crate) fn get(&self) -> i8 {
         self.0
     }
+
+    pub(crate) fn from_str(s: &str) -> Vec<Rule> {
+        s.chars().map(
+            |c| {
+                match c {
+                    'L' => Rule::L,
+                    'C' => Rule::C,
+                    'R' => Rule::R,
+                    _ => panic!("invalid char in string")
+                }
+            }
+        ).collect()
+    }
 }
 
 impl std::fmt::Display for Rule {

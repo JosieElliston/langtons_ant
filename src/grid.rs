@@ -30,10 +30,20 @@ static COLORS: &[Color] = &[
     Color::PURPLE,
     Color::PINK,
     Color::SKYBLUE,
-    Color::LIME,
+    Color::DARKBLUE,
+    Color::LIGHTGRAY,
+    Color::GRAY,
+    Color::DARKGRAY,
     Color::GOLD,
-    Color::BROWN,
     Color::MAROON,
+    Color::LIME,
+    Color::DARKGREEN,
+    Color::DARKPURPLE,
+    Color::BEIGE,
+    Color::BROWN,
+    Color::DARKBROWN,
+    Color::MAGENTA,
+    Color::RAYWHITE,
 ];
 
 // struct Coord {
@@ -171,7 +181,7 @@ impl Grid {
                 y: screen_width as f32 * row as f32 / self.state_width as f32,
             },
             rect_size,
-            COLORS[state as usize],
+            COLORS[state as usize % COLORS.len()],
         )
     }
 
@@ -208,16 +218,15 @@ impl Grid {
     }
 
     pub(crate) fn save_image(&self) {
-        let mut colors: Vec<u8> =
-            vec![0; (3 * self.state_width * self.state_width) as usize];
+        let mut colors: Vec<u8> = vec![0; (3 * self.state_width * self.state_width) as usize];
 
         let mut i = 0;
         for line in &self.state {
             for &state in line {
-                let color = COLORS[state as usize];
+                let color = COLORS[state as usize % COLORS.len()];
                 colors[i] = color.r;
-                colors[i+1] = color.g;
-                colors[i+2] = color.b;
+                colors[i + 1] = color.g;
+                colors[i + 2] = color.b;
                 i += 3;
             }
         }
