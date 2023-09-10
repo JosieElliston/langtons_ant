@@ -54,27 +54,31 @@ impl Ant {
         match self.dir.get() {
             0 => {
                 self.x += 1;
-                if self.x > self.x_max {
-                    self.x_max = self.x;
-                }
+                self.x_max = self.x.max(self.x_max);
+                // if self.x > self.x_max {
+                //     self.x_max = self.x;
+                // }
             }
             1 => {
                 self.y -= 1;
-                if self.y < self.y_min {
-                    self.y_min = self.y;
-                }
+                self.y_min = self.y.min(self.y_min);
+                // if self.y < self.y_min {
+                //     self.y_min = self.y;
+                // }
             }
             2 => {
                 self.x -= 1;
-                if self.x < self.x_min {
-                    self.x_min = self.x;
-                }
+                self.x_min = self.x.min(self.x_min);
+                // if self.x < self.x_min {
+                //     self.x_min = self.x;
+                // }
             }
             3 => {
                 self.y += 1;
-                if self.y > self.y_max {
-                    self.y_max = self.y;
-                }
+                self.y_max = self.y.max(self.y_max);
+                // if self.y > self.y_max {
+                //     self.y_max = self.y;
+                // }
             }
             _ => panic!("invalid ant direction"),
         }

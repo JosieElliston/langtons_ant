@@ -15,7 +15,8 @@ use crate::{ant::*, rule::*};
 // }
 
 const INITIAL_RADIUS: i32 = 4;
-const RESIZE_BUFFER: i32 = 4;
+// const RESIZE_BUFFER: i32 = 4;
+const RESIZE_BUFFER: f32 = 1.1;
 
 static COLORS: &[Color] = &[
     Color::BLACK,
@@ -39,6 +40,11 @@ static COLORS: &[Color] = &[
 //     row: usize,
 //     col: usize,
 // }
+
+pub(crate) enum StepState {
+    Resized,
+    NotResized,
+}
 
 pub(crate) struct Grid {
     ant: Ant,
@@ -70,11 +76,11 @@ impl Grid {
         println!("resize");
         let center_x = (self.ant.x_max() + self.ant.x_min()) / 2;
         let center_y = (self.ant.y_max() + self.ant.y_min()) / 2;
-        let new_radius = ((center_x - self.ant.x_min()).abs())
+        let new_radius = (((center_x - self.ant.x_min()).abs())
             .max((center_x - self.ant.x_max()).abs())
             .max((center_y - self.ant.y_min()).abs())
-            .max((center_y - self.ant.y_max()).abs())
-            + RESIZE_BUFFER;
+            .max((center_y - self.ant.y_max()).abs()) as f32
+            * RESIZE_BUFFER) as i32;
 
         let new_width = 2 * new_radius + 1;
         let new_state_x_min = center_x - new_radius;
@@ -124,7 +130,7 @@ impl Grid {
         self.state = new_state;
     }
 
-    pub(crate) fn step(&mut self) {
+    pub(crate) fn step(&mut self) -> StepState {
         let row = (self.ant.y() - self.state_y_min) as usize;
         let col = (self.ant.x() - self.state_x_min) as usize;
         // let row = (self.ant.y() + self.neg_coord_min as i32) as usize;
@@ -140,6 +146,9 @@ impl Grid {
             || (self.ant.y() >= self.state_y_min + self.state_width)
         {
             self.resize();
+            StepState::Resized
+        } else {
+            StepState::NotResized
         }
     }
 
