@@ -76,7 +76,15 @@ fn main() {
     // let end = std::time::Instant::now();
     // println!("time per step: {}", (end-start).as_nanos() as f64 / TEST_STEPS as f64);
 
-
+    // loop {
+    //     if matches!(grid.step(), StepState::Resized) {
+    //         grid.save_image();
+    //         println!("width: {}", grid.width());
+    //         if grid.width() > 100 {
+    //             break;
+    //         }
+    //     }
+    // }
 
     let (mut rl, thread) = raylib::init()
         .size(SCREEN_SIZE, SCREEN_SIZE)
@@ -97,9 +105,9 @@ fn main() {
         // if rl.is_key_pressed(raylib::consts::KeyboardKey::KEY_SPACE) {
         //     grid.step();
         // }
-        // if rl.is_key_down(raylib::consts::KeyboardKey::KEY_SPACE) {
-        //     grid.step();
-        // }
+        if rl.is_key_pressed(raylib::consts::KeyboardKey::KEY_SPACE) {
+            grid.save_image();
+        }
         if rl.is_key_pressed(raylib::consts::KeyboardKey::KEY_DOWN) {
             step_pow /= 2;
         }
@@ -119,5 +127,5 @@ fn main() {
         let mut draw_handle = rl.begin_drawing(&thread);
 
         grid.draw(&mut draw_handle, SCREEN_SIZE);
-    }
+    } 
 }

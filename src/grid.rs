@@ -72,6 +72,10 @@ impl Grid {
         }
     }
 
+    pub(crate) fn width(&self) -> i32 {
+        self.state_width
+    }
+
     fn resize(&mut self) {
         println!("resize");
         let center_x = (self.ant.x_max() + self.ant.x_min()) / 2;
@@ -201,6 +205,31 @@ impl Grid {
         //     }
         // }
         // self.draw_updates.clear();
+    }
+
+    pub(crate) fn save_image(&self) {
+        let mut colors: Vec<u8> =
+            vec![0; (3 * self.state_width * self.state_width) as usize];
+
+        let mut i = 0;
+        for line in &self.state {
+            for &state in line {
+                let color = COLORS[state as usize];
+                colors[i] = color.r;
+                colors[i+1] = color.g;
+                colors[i+2] = color.b;
+                i += 3;
+            }
+        }
+        assert_eq!(self.state.len(), self.state_width as usize);
+        image::save_buffer(
+            std::path::Path::new("image.png"),
+            &colors,
+            self.state_width as u32,
+            self.state_width as u32,
+            image::ColorType::Rgb8,
+        )
+        .unwrap();
     }
 }
 
