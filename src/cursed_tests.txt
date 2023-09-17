@@ -1,0 +1,122 @@
+
+    // histogram of single samples (cursed)
+    // const TEST_STEPS: u128 = 2u128.pow(26);
+    // // const TEST_STEPS: u128 = 2u128.pow(20);
+    // let mut hist: histo::Histogram = histo::Histogram::with_buckets(200);
+    // for _ in 0..1000 {
+    //     grid.step();
+    // }
+    // for _ in 0..TEST_STEPS {
+    //     let start = std::time::Instant::now();
+    //     // grid.step(); // wait the histogram look the same even if i don't call this??????
+    //     // let end = std::time::Instant::now();
+    //     // let time = (end - start).as_nanos();
+    //     let time = start.elapsed().as_nanos();
+    //     // println!("{}", time);
+    //     if time > 200 {
+    //         continue;
+    //     }
+    //     hist.add(time as u64);
+    // }
+    // println!("{}", hist);
+    // println!("width: {}", grid.width());
+    // let cache0 = hist.buckets().nth(0).unwrap().count() as f64;
+    // let cache1 = (hist.buckets().nth(20).unwrap().count() + hist.buckets().nth(21).unwrap().count()) as f64;
+    // println!("0 cache misses: {:?}", cache0 / (cache0 + cache1));
+    // println!("1 cache misses: {:?}", cache1 / (cache0 + cache1));
+    // 0.61217451995 of the time there is 0 cache misses
+    // 0.38703210649 of the time there is 1 cache misses
+    // // and 0.99920662644 there is 0 or 1 cache misses
+    
+
+    // counts times = 0 and times != 0 (cursed)
+    // const TEST_STEPS: u128 = 2u128.pow(26);
+    // for _ in 0..1000 {
+    //     grid.step();
+    // }
+    // let mut cache_hits: u64 = 0;
+    // let mut cache_misses: u64 = 0;
+    // for _ in 0..TEST_STEPS {
+    //     let start = std::time::Instant::now();
+    //     grid.step();
+    //     let end = std::time::Instant::now();
+
+    //     let time = (end - start).as_nanos();
+
+    //     if time == 0 {
+    //         cache_hits += 1;
+    //     } else {
+    //         cache_misses += 1;
+    //     }
+    // }
+    // println!(
+    //     "0 nanos: {}",
+    //     cache_hits as f64 / (cache_hits + cache_misses) as f64
+    // );
+    // println!(
+    //     ">0 nanos: {}",
+    //     cache_misses as f64 / (cache_hits + cache_misses) as f64
+    // );
+    
+    // tries to correlate cache hits with the ant's direction (cursed)
+    // const TEST_STEPS: u128 = 2u128.pow(26);
+    // for _ in 0..1000 {
+    //     grid.step();
+    // }
+    // let mut cache_hits: u64 = 0;
+    // let mut cache_misses: u64 = 0;
+    // let mut hit_neg_x = 0;
+    // let mut hit_neg_y = 0;
+    // let mut hit_pos_x = 0;
+    // let mut hit_pos_y = 0;
+    // let mut miss_neg_x = 0;
+    // let mut miss_neg_y = 0;
+    // let mut miss_pos_x = 0;
+    // let mut miss_pos_y = 0;
+    // for _ in 0..TEST_STEPS {
+    //     // println!();
+    //     let start = std::time::Instant::now();
+    //     let out = grid.step();
+    //     let end = std::time::Instant::now();
+    //     // println!("{:?}", out);
+    //     let time = (end - start).as_nanos();
+    //     // println!("time: {}", time);
+    //     if time == 0 {
+    //         // println!("hit");
+    //         cache_hits += 1;
+    //         match out {
+    //             StepState::PosX => hit_pos_x += 1,
+    //             StepState::NegX => hit_neg_x += 1,
+    //             StepState::PosY => hit_pos_y += 1,
+    //             StepState::NegY => hit_neg_y += 1,
+    //             _ => (),
+    //         }
+    //     } else {
+    //         // println!("miss");
+    //         cache_misses += 1;
+    //         match out {
+    //             StepState::PosX => miss_pos_x += 1,
+    //             StepState::NegX => miss_neg_x += 1,
+    //             StepState::PosY => miss_pos_y += 1,
+    //             StepState::NegY => miss_neg_y += 1,
+    //             _ => (),
+    //         }
+    //     }
+    // }
+    // println!(
+    //     "0 nanos: {}",
+    //     cache_hits as f64 / (cache_hits + cache_misses) as f64
+    // );
+    // println!(
+    //     ">0 nanos: {}",
+    //     cache_misses as f64 / (cache_hits + cache_misses) as f64
+    // );
+    // println!("width: {}", grid.width());
+    // println!("hit_pos_x: {}", hit_pos_x as f64 / TEST_STEPS as f64);
+    // println!("hit_neg_x: {}", hit_neg_x as f64 / TEST_STEPS as f64);
+    // println!("hit_pos_y: {}", hit_pos_y as f64 / TEST_STEPS as f64);
+    // println!("hit_neg_y: {}", hit_neg_y as f64 / TEST_STEPS as f64);
+    // println!("miss_pos_x: {}", miss_pos_x as f64 / TEST_STEPS as f64);
+    // println!("miss_neg_x: {}", miss_neg_x as f64 / TEST_STEPS as f64);
+    // println!("miss_pos_y: {}", miss_pos_y as f64 / TEST_STEPS as f64);
+    // println!("miss_neg_y: {}", miss_neg_y as f64 / TEST_STEPS as f64);
